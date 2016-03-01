@@ -7,9 +7,16 @@ export default React.createClass({
 
   },
   render: function(){
-    let mapTodoLists = _.map(this.props.todoLists, function(item) {
+    console.log(this.props)
+    let mapTodoLists = _.map(this.props.todoLists, item => {
       return (
-        <TodoListsItem key={item.key} itemKey={item.key} text={item.text} state={item.state} />
+        <TodoListsItem
+          stateChange={this.props.stateChange}
+          textChange={this.props.textChange}
+          key={item.key}
+          itemKey={item.key}
+          text={item.text}
+          state={item.state} />
       )
     })
     return (

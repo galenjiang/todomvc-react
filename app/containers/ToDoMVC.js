@@ -12,10 +12,20 @@ export default React.createClass({
       key: 2
     }
   },
+  stateChange: function(itemKey) {
+    console.log(itemKey)
+  },
+  textChange: function(itemKey, newText) {
+    console.log(itemKey, newText)
+  },
   render: function(){
     return (
       <div>
-        <TodoApp todoLists={this.state.todoLists} />
+        <TodoApp
+          todoLists={this.state.todoLists}
+          total={this.state.todoLists.length}
+          stateChange={this.stateChange}
+          textChange={this.textChange} />
         <Footer />
       </div>
     )

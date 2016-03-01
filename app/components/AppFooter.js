@@ -2,9 +2,10 @@ import React from "react";
 
 export default React.createClass({
   render: function(){
+    let total = this.props.total;
     return (
       <footer className="footer">
-        <span className="todo-count"><strong>0</strong> item left</span>
+        <span className="todo-count"><strong>{total}</strong> item left</span>
         <ul className="filters">
           <li>
             <a className="selected" href="#/">All</a>

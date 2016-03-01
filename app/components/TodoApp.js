@@ -8,8 +8,11 @@ export default React.createClass({
     return (
       <section className="todoapp">
         <AppHeader />
-        <AppMain todoLists={this.props.todoLists} />
-        <AppFooter />
+        <AppMain
+          todoLists={this.props.todoLists}
+          stateChange={this.props.stateChange}
+          textChange={this.props.textChange} />
+        <AppFooter total={this.props.total} />
       </section>
 
     )
