@@ -6,15 +6,16 @@ export default React.createClass({
   getInitialState: function(){
     return {
       todoLists: [
-        {key: 1,text: "hello, world"},
-        {key: 2,text: "hello, galen"}
+        {key: 1,text: "hello, world", state: "done"},
+        {key: 2,text: "hello, galen", state: "unfinished"}
       ],
+      key: 2
     }
   },
   render: function(){
     return (
       <div>
-        <TodoApp />
+        <TodoApp todoLists={this.state.todoLists} />
         <Footer />
       </div>
     )

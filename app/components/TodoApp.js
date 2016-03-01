@@ -8,7 +8,7 @@ export default React.createClass({
     return (
       <section className="todoapp">
         <AppHeader />
-        <AppMain />
+        <AppMain todoLists={this.props.todoLists} />
         <AppFooter />
       </section>
 

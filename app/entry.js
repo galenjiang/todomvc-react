@@ -4,5 +4,5 @@ import ToDoMVC from "./containers/ToDoMVC"
 
 render(
   <ToDoMVC />,
-  document.getElementById("ToDoMVC")
+  document.getElementById("app")
 )
