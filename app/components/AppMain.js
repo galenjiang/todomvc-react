@@ -10,7 +10,17 @@ export default React.createClass({
     this.props.toggleAllHandler()
   },
   render: function(){
-    let mapTodoLists = _.map(this.props.todoLists, item => {
+    let filterTodoLists = _.filter(this.props.todoLists, item => {
+      switch(this.props.type) {
+        case "done":
+          return item.state === "done";
+        case "unfinished":
+          return item.state === "unfinished";
+        default:
+          return true;
+      }
+    })
+    let mapTodoLists = _.map(filterTodoLists, item => {
       return (
         <TodoListsItem
           stateChange={this.props.stateChange}

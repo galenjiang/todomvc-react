@@ -11,14 +11,15 @@ export default React.createClass({
         {key: 2,text: "hello, galen", state: "unfinished"}
       ],
       key: 2,
-      toggleAll: false,
+      toggleAll: true,
+      type: "all",
     }
   },
-  componentsWillMount: function() {
+  componentWillMount: function() {
     this.checkState();
   },
   componentWillUpdate: function() {
-    // this.checkState();
+
   },
   stateChange: function(itemKey) {
     let index = _.findIndex(this.state.todoLists, function(item) {
@@ -26,7 +27,7 @@ export default React.createClass({
     })
     let newTodoLists = _.extend([], this.state.todoLists);
     newTodoLists[index].state === "done" ? newTodoLists[index].state = "unfinished" : newTodoLists[index].state = "done";
-    this. setState({
+    this.setState({
       todoLists: newTodoLists,
     }, function() {
       this.checkState();
@@ -92,12 +93,16 @@ export default React.createClass({
     }
   },
   checkState: function() {
-    console.log(1, this.state.todoLists);
     let state = _.every(this.state.todoLists, function(item) {
       return item.state === "done"
     })
     this.setState({
       toggleAll: state,
+    })
+  },
+  taskHandler: function(type) {
+    this.setState({
+      type: type,
     })
   },
   render: function(){
@@ -111,7 +116,9 @@ export default React.createClass({
           itemDelete={this.itemDelete}
           addTodoList={this.addTodoList}
           toggleAllHandler={this.toggleAllHandler}
-          toggleAll={this.state.toggleAll} />
+          toggleAll={this.state.toggleAll}
+          type={this.state.type}
+          taskHandler={this.taskHandler} />
         <Footer />
       </div>
     )

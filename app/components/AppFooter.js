@@ -1,6 +1,16 @@
 import React from "react";
+import classNames from "classnames";
 
 export default React.createClass({
+  allHandler: function() {
+    this.props.taskHandler("all")
+  },
+  unfinishedHandler: function() {
+    this.props.taskHandler("unfinished")
+  },
+  doneHandler: function() {
+    this.props.taskHandler("done")
+  },
   render: function(){
     let total = this.props.total;
     return (
@@ -8,13 +18,13 @@ export default React.createClass({
         <span className="todo-count"><strong>{total}</strong> item left</span>
         <ul className="filters">
           <li>
-            <a className="selected" href="#/">All</a>
+            <a onClick={this.allHandler} className={classNames({selected: this.props.type === "all"})} href="#/">All</a>
           </li>
           <li>
-            <a href="#/active">Active</a>
+            <a onClick={this.unfinishedHandler} className={classNames({selected: this.props.type === "unfinished"})} href="#/active">Active</a>
           </li>
           <li>
-            <a href="#/completed">Completed</a>
+            <a onClick={this.doneHandler} className={classNames({selected: this.props.type === "done"})} href="#/completed">Completed</a>
           </li>
         </ul>
         <button className="clear-completed">Clear completed</button>

@@ -15,8 +15,12 @@ export default React.createClass({
           textChange={this.props.textChange}
           itemDelete={this.props.itemDelete}
           toggleAllHandler={this.props.toggleAllHandler}
-          toggleAll={this.props.toggleAll} />
-        <AppFooter total={this.props.total} />
+          toggleAll={this.props.toggleAll}
+          type={this.props.type} />
+        <AppFooter
+          total={this.props.total}
+          taskHandler={this.props.taskHandler}
+          type={this.props.type} />
       </section>
 
     )
