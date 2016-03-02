@@ -7,12 +7,11 @@ export default React.createClass({
       stateEditing: false,
     }
   },
-  radioClickHandler: function() {
+  checkBoxClickHandler: function() {
     this.props.stateChange(this.props.itemKey)
   },
   labelClickHandler: function(e) {
-    e.stopPropagation();
-    e.preventDefault();
+    // e.stopPropagation();
   },
   labelDbclickHandler: function(e) {
     this.setState({
@@ -28,21 +27,24 @@ export default React.createClass({
   inputEditKeyDownHandler: function(e) {
     if(e.keyCode === 13) this.inputEditBlurHandler()
   },
+  buttonClickHandler: function() {
+    this.props.itemDelete(this.props.itemKey);
+  },
   componentDidUpdate: function() {
     this.state.stateEditing && this.refs.inputEdit.focus();
+    console.log("update")
   },
   render: function() {
     let classes = classNames({
       "completed": (this.props.state === "done"),
       "editing": this.state.stateEditing,
     })
-    console.log(this.props.itemKey,classes);
     return (
-      <li onClick={this.radioClickHandler} key={this.props.key} className={classes}>
+      <li key={this.props.key} className={classes}>
         <div className="view">
-          <input className="toggle" type="checkbox" defaultChecked={(this.props.state === "done") ? true : false} />
+          <input onChange={this.checkBoxClickHandler} className="toggle" type="checkbox" checked={(this.props.state === "done") ? true : false} />
           <label onClick={this.labelClickHandler} onDoubleClick={this.labelDbclickHandler} >{this.props.text}</label>
-          <button className="destroy"></button>
+          <button onClick={this.buttonClickHandler} className="destroy"></button>
         </div>
         <input onKeyDown={this.inputEditKeyDownHandler} onBlur={this.inputEditBlurHandler} ref="inputEdit" className="edit" defaultValue={this.props.text} />
       </li>

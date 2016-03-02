@@ -3,11 +3,13 @@ import _ from "lodash";
 import TodoListsItem from "./TodoListsItem";
 
 export default React.createClass({
-  componentWillMount: function() {
-
+  componentWillUpdate: function() {
+    console.log(this.props.todoLists)
+  },
+  toggleAllHandler: function() {
+    this.props.toggleAllHandler()
   },
   render: function(){
-    console.log(this.props)
     let mapTodoLists = _.map(this.props.todoLists, item => {
       return (
         <TodoListsItem
@@ -16,12 +18,13 @@ export default React.createClass({
           key={item.key}
           itemKey={item.key}
           text={item.text}
-          state={item.state} />
+          state={item.state}
+          itemDelete={this.props.itemDelete} />
       )
     })
     return (
       <section className="main">
-        <input className="toggle-all" type="checkbox" />
+        <input onChange={this.toggleAllHandler} checked={this.props.toggleAll} className="toggle-all" type="checkbox" />
         <label htmlFor="toggle-all">Mark all as complete</label>
         <ul className="todo-list">
           {mapTodoLists}

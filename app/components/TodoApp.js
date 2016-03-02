@@ -7,11 +7,15 @@ export default React.createClass({
   render: function(){
     return (
       <section className="todoapp">
-        <AppHeader />
+        <AppHeader
+          addTodoList={this.props.addTodoList}/>
         <AppMain
           todoLists={this.props.todoLists}
           stateChange={this.props.stateChange}
-          textChange={this.props.textChange} />
+          textChange={this.props.textChange}
+          itemDelete={this.props.itemDelete}
+          toggleAllHandler={this.props.toggleAllHandler}
+          toggleAll={this.props.toggleAll} />
         <AppFooter total={this.props.total} />
       </section>
 

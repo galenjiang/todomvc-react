@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from "lodash";
 import Footer from "../components/Footer";
 import TodoApp from "../components/TodoApp";
 
@@ -9,14 +10,95 @@ export default React.createClass({
         {key: 1,text: "hello, world", state: "done"},
         {key: 2,text: "hello, galen", state: "unfinished"}
       ],
-      key: 2
+      key: 2,
+      toggleAll: false,
     }
   },
+  componentsWillMount: function() {
+    this.checkState();
+  },
+  componentWillUpdate: function() {
+    // this.checkState();
+  },
   stateChange: function(itemKey) {
-    console.log(itemKey)
+    let index = _.findIndex(this.state.todoLists, function(item) {
+      return item.key === itemKey;
+    })
+    let newTodoLists = _.extend([], this.state.todoLists);
+    newTodoLists[index].state === "done" ? newTodoLists[index].state = "unfinished" : newTodoLists[index].state = "done";
+    this. setState({
+      todoLists: newTodoLists,
+    }, function() {
+      this.checkState();
+    })
   },
   textChange: function(itemKey, newText) {
-    console.log(itemKey, newText)
+    let index = _.findIndex(this.state.todoLists, function(item) {
+      return item.key === itemKey;
+    })
+    let newTodoLists = _.extend([], this.state.todoLists);
+    newTodoLists[index].text = newText;
+    this.setState({
+      todoLists: newTodoLists,
+    })
+  },
+  itemDelete: function(itemKey) {
+    let index = _.find(this.state.todoLists, function(item) {
+      return item.key === itemKey;
+    })
+    let newTodoLists = _.extend([], this.state.todoLists);
+    newTodoLists = _.without(newTodoLists, index);
+    this.setState({
+      todoLists: newTodoLists,
+    }, function() {
+      this.checkState();
+    })
+  },
+  addTodoList: function(newText) {
+    let newTodoList = {
+      key: this.state.key + 1,
+      text: newText,
+      state: "unfinished",
+    }
+    let newTodoLists = _.extend([], this.state.todoLists);
+    newTodoLists = newTodoLists.concat(newTodoList);
+    this.setState(
+      {
+      todoLists: newTodoLists,
+      key: this.state.key + 1,
+    }, function() {
+      this.checkState();
+    })
+  },
+  toggleAllHandler: function() {
+    if(this.state.toggleAll === true){
+      let newTodoLists = _.extend([], this.state.todoLists)
+      newTodoLists = _.each(newTodoLists, function(item, index) {
+        newTodoLists[index].state = "unfinished";
+      })
+      this.setState({
+        todoLists: newTodoLists,
+        toggleAll: false,
+      })
+    }else{
+      let newTodoLists = _.extend([], this.state.todoLists)
+      newTodoLists = _.each(newTodoLists, function(item, index) {
+        newTodoLists[index].state = "done";
+      })
+      this.setState({
+        todoLists: newTodoLists,
+        toggleAll: true,
+      })
+    }
+  },
+  checkState: function() {
+    console.log(1, this.state.todoLists);
+    let state = _.every(this.state.todoLists, function(item) {
+      return item.state === "done"
+    })
+    this.setState({
+      toggleAll: state,
+    })
   },
   render: function(){
     return (
@@ -25,7 +107,11 @@ export default React.createClass({
           todoLists={this.state.todoLists}
           total={this.state.todoLists.length}
           stateChange={this.stateChange}
-          textChange={this.textChange} />
+          textChange={this.textChange}
+          itemDelete={this.itemDelete}
+          addTodoList={this.addTodoList}
+          toggleAllHandler={this.toggleAllHandler}
+          toggleAll={this.state.toggleAll} />
         <Footer />
       </div>
     )
